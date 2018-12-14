@@ -26,7 +26,7 @@ constants.endTimeDefaultInMinutes = 2890
 constants.getTransactionReceiptInterval = 5000
 
 constants.NETWORKS = {
-    '22': {
+  '22': {
     NAME: 'L14',
     RPC: 'http://localhost:8545',
     BRANCH: 'l14',
