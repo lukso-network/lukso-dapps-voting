@@ -1,6 +1,6 @@
 import React from 'react'
 import logoBase from '../assets/images/logos/logo-poa.svg'
-import logoSokol from '../assets/images/logos/logo-sokol.svg'
+import logoSokol from '../assets/images/logos/Lukso_Wordmark_navy.png'
 import menuIconBase from '../assets/images/icons/icon-menu.svg'
 import menuIconSokol from '../assets/images/icons/icon-menu-sokol.svg'
 import menuOpenIconBase from '../assets/images/icons/icon-close.svg'
@@ -27,6 +27,7 @@ export const Header = ({ netId, baseRootPath, navigationData, showMobileMenu, on
         <a className="header-logo-a" href={baseRootPath}>
           <img className="header-logo" src={logoImageName} alt="" />
         </a>
+        <span className="logo-title">Voting</span>
         <div className="links-container">
           <NavigationLinks navigationData={navigationData} />
         </div>

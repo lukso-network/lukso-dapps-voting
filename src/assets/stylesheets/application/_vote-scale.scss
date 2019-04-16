@@ -17,35 +17,30 @@
     &_no {
       background-color: $danger-color;
       .sokol & {
-        background-color: $danger-color-sokol;
       }
     }
 
     &_yes {
       background-color: $success-color;
       .sokol & {
-        background-color: $success-color-sokol;
       }
     }
 
     &_send {
       background-color: $success-color;
       .sokol & {
-        background-color: $success-color-sokol;
       }
     }
 
     &_burn {
       background-color: $danger-color;
       .sokol & {
-        background-color: $danger-color-sokol;
       }
     }
 
     &_freeze {
       background-color: $freeze-color;
       .sokol & {
-        background-color: $freeze-color-sokol;
       }
     }
 

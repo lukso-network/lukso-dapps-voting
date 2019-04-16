@@ -3,10 +3,10 @@ import { constants } from './constants'
 
 const styles = netId => {
   const core = {
-    backgroundColor: 'rgba(78,44,137, 0.9)'
+    backgroundColor: 'rgba(253, 206, 196, 0.8)'
   }
   const sokol = {
-    backgroundColor: 'rgba(47, 109, 99, 0.8)'
+    backgroundColor: 'rgba(253, 206, 196, 0.8)'
   }
 
   if (netId in constants.NETWORKS) {

@@ -42,7 +42,7 @@ class App extends Component {
           icon: 'link-icon-add',
           title: 'New Ballot',
           url: `${commonStore.rootPath}/new`,
-          class: 'btn btn-new-ballot btn-success btn-new no-shadow text-capitalize'
+          class: 'btn btn-new-ballot btn-success btn-new no-shadow text-capitalize lukso-button'
         }
         // {
         //   'icon': '',

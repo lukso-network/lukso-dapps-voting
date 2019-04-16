@@ -7,7 +7,7 @@
   position: absolute;
 
   &.sokol {
-    background-color: $primary-color-sokol;
+    background-color: $lukso-navy-blue;
   }
 
   .container {
@@ -41,7 +41,7 @@
     width: 139px;
 
     &.sokol {
-      background-image: url('#{ $base-images-path}/logos/logo-sokol.svg');
+      background-image: url('#{ $base-images-path}/logos/lukso.png');
       width: 144px;
     }
   }

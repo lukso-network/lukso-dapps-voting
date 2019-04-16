@@ -52,8 +52,6 @@ textarea {
 
   .sokol & {
     @include make-themed-btn('btn-primary', $primary-color-sokol, (106, 201, 185, 0.3));
-    @include make-themed-btn('btn-success', $success-color-sokol, (96, 219, 151, 0.3));
-    @include make-themed-btn('btn-danger', $danger-color-sokol, (242, 76, 103, 0.33));
     @include make-themed-btn('btn-freeze', $freeze-color-sokol, (80, 187, 218, 0.3));
   }
 

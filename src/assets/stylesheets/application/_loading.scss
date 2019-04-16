@@ -20,10 +20,10 @@
   padding-top: 50px;
   position: absolute;
   top: 50%;
-  width: 206px;
+  width: 256px;
 
   &:before {
-    background-image: url("#{ $base-images-path }/logos/logo_loader.svg");
+    background-image: url("#{ $base-images-path }/logos/lukso.png");
     background-position: 0 0;
     background-repeat: no-repeat;
     content: '';
@@ -31,7 +31,7 @@
     position: absolute;
     top: 0;
     height: 100px;
-    width: 206px;
+    width: 245px;
   }
 
   &-container {

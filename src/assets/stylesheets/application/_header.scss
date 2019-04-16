@@ -25,13 +25,21 @@
   }
 
   &.sokol {
-    background-color: $primary-color-sokol;
+    background-color: #fff;
   }
 
   // logos
   &-logo {
     display: block;
-    height: 26px;
+    height: 20px;
+  }
+
+  .logo-title {
+    color: $lukso-navy-blue;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 10px
   }
 
   // header links
@@ -65,7 +73,7 @@
   }
 
   .link {
-    color: #fff;
+    color: $lukso-navy-blue;
     font-size: 14px;
     font-weight: 700;
     line-height: 18px;
@@ -178,10 +186,15 @@
     .btn.btn-new-ballot {
       background-color: #fff;
       background-image: url('#{ $base-images-path }/icons/icon-add-sokol.svg');
-      color: $primary-color-sokol;
+      color: $lukso-navy-blue;
       &:hover {
         opacity: 0.9;
       }
+    }
+
+    .lukso-button {
+      -webkit-box-shadow: 0px 5px 10px 0 rgba(28, 46, 84, 0.3);
+      box-shadow: 0px 5px 10px 0 rgba(28, 46, 84, 0.3);
     }
   }
 
