@@ -38,10 +38,10 @@ input.search-input {
   &:focus
   &:hover,
   &:active {
-    color: #fff;
+    color: $lukso-navy-blue;
   }
   .sokol & {
     background-image: url('#{ $base-images-path }/icons/icon-search-sokol.svg');
   }
-  @include placeholder-full($color: rgba(255, 255, 255, 0.5));
+  @include placeholder-full($color: $lukso-navy-blue);
 }
