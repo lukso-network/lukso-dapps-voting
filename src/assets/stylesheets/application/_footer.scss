@@ -19,6 +19,10 @@
     @media screen and (max-width: $tablet-width) {
       flex-direction: column;
     }
+
+    a {
+      color: $lukso-pink;
+    }
   }
 
   .socials {

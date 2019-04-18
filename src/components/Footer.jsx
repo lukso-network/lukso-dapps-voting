@@ -10,7 +10,12 @@ export const Footer = ({ netId }) => {
     <footer className={`footer ${footerClassName}`}>
       <div className="container">
         <Link to="/poa-dapps-voting" className={`footer-logo ${footerClassName}`} />
-        <p className="footer-rights">Built by POA Network. All rights reserved.</p>
+        <p className="footer-rights">
+          Built by{' '}
+          <a target="_blank" href="https://poa.network">
+            POA Network
+          </a>. All rights reserved.
+        </p>
         <Socials />
       </div>
     </footer>
