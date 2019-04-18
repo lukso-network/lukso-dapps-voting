@@ -12,7 +12,7 @@ export const Footer = ({ netId }) => {
         <Link to="/poa-dapps-voting" className={`footer-logo ${footerClassName}`} />
         <p className="footer-rights">
           Built by{' '}
-          <a target="_blank" href="https://poa.network">
+          <a target="_blank" rel="noopener noreferrer" href="https://poa.network">
             POA Network
           </a>. All rights reserved.
         </p>
