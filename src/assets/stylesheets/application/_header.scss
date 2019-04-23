@@ -16,6 +16,7 @@
     align-items: center;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
 
     @media screen and (max-width: $mobile-width) {
       width: 93%;
@@ -153,7 +154,7 @@
   &.sokol {
     .header-mobile-menu-container {
       @media screen and (max-width: $mobile-width) {
-        background-color: $primary-color-darker-sokol;
+        background-color: $lukso-pink;
       }
     }
   }

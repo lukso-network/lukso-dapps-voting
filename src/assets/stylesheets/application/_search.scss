@@ -34,6 +34,11 @@ input.search-input {
   outline: none;
   padding-left: 30px;
   width: 100%;
+
+  @media screen and (max-width: $mobile-width) {
+    height: 40px;
+  }
+
   &,
   &:focus
   &:hover,
