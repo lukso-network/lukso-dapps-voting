@@ -16,7 +16,6 @@
     align-items: center;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
 
     @media screen and (max-width: $mobile-width) {
       width: 93%;
