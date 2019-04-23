@@ -10,10 +10,10 @@ const styles = netId => {
   }
 
   if (netId in constants.NETWORKS) {
-    return constants.NETWORKS[netId].TESTNET ? sokol : core
+    return constants.NETWORKS[netId].TESTNET ? sokol : sokol
   }
 
-  return core
+  return sokol
 }
 const Loading = ({ netId }) => (
   <div className="loading-container" style={styles(netId)}>

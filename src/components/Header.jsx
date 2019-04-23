@@ -1,5 +1,4 @@
 import React from 'react'
-import logoBase from '../assets/images/logos/logo-poa.svg'
 import logoSokol from '../assets/images/logos/Lukso_Wordmark_navy.png'
 import menuIconBase from '../assets/images/icons/icon-menu.svg'
 import menuIconSokol from '../assets/images/icons/icon-menu-sokol.svg'
@@ -11,8 +10,8 @@ import { constants } from '../constants'
 
 export const Header = ({ netId, baseRootPath, navigationData, showMobileMenu, onMenuToggle }) => {
   const thisIsTestnet = netId in constants.NETWORKS && constants.NETWORKS[netId].TESTNET
-  const headerClassName = thisIsTestnet ? 'sokol' : ''
-  const logoImageName = thisIsTestnet ? logoSokol : logoBase
+  const headerClassName = thisIsTestnet ? 'sokol' : 'sokol'
+  const logoImageName = thisIsTestnet ? logoSokol : logoSokol
   const menuIcon = thisIsTestnet ? menuIconSokol : menuIconBase
   const menuOpenIcon = thisIsTestnet ? menuOpenIconSokol : menuOpenIconBase
 

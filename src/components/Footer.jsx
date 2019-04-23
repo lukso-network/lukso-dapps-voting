@@ -4,7 +4,7 @@ import Socials from './Socials.jsx'
 import { constants } from '../constants'
 
 export const Footer = ({ netId }) => {
-  const footerClassName = netId in constants.NETWORKS && constants.NETWORKS[netId].TESTNET ? 'sokol' : ''
+  const footerClassName = netId in constants.NETWORKS && constants.NETWORKS[netId].TESTNET ? 'sokol' : 'sokol'
 
   return (
     <footer className={`footer ${footerClassName}`}>

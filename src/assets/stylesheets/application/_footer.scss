@@ -40,14 +40,14 @@
     background-repeat: no-repeat;
     background-size: contain;
     display: block;
-    height: 18px;
+    height: 20px;
     left: 0;
     order: 0;
-    width: 139px;
+    width: 102px;
 
     &.sokol {
       background-image: url('#{ $base-images-path}/logos/lukso.png');
-      width: 144px;
+      width: 102px;
     }
   }
 
