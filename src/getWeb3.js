@@ -60,7 +60,7 @@ let getWeb3 = () => {
         netIdName = network.NAME
       }
 
-      document.title = `${netIdName} - POA Network Governance DApp`
+      document.title = `${netIdName} - LUKSO Network Governance DApp`
 
       if (errorMsg !== null) {
         reject({ message: errorMsg })
