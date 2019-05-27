@@ -5,17 +5,17 @@ let Socials = () => {
     {
       icon: 'socials-i_twitter',
       title: 'Twitter',
-      url: 'https://twitter.com/poanetwork'
+      url: 'https://twitter.com/lukso_io'
     },
     {
       icon: 'socials-i_telegram',
       title: 'Telegram',
-      url: 'https://t.me/oraclesnetwork'
+      url: 'https://t.me/LUKSO'
     },
     {
       icon: 'socials-i_github',
       title: 'GitHub',
-      url: 'https://github.com/poanetwork/'
+      url: 'https://github.com/lukso-network/'
     }
   ]
 
