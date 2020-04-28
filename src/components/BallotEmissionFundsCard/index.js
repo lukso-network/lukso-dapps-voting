@@ -12,7 +12,7 @@ export class BallotEmissionFundsCard extends React.Component {
     return (
       <BallotCard votingType="votingToManageEmissionFunds" votingState={votingState} id={id} pos={pos}>
         <BallotDataPair dataType="proposed-receiver" title="Proposed Receiver" value={[votingState.receiver]} />
-        <BallotDataPair dataType="funds-amount" title="Funds Amount" value={[`${amount} LYX`]} />
+        <BallotDataPair dataType="funds-amount" title="Funds Amount" value={[`${amount} POA`]} />
       </BallotCard>
     )
   }

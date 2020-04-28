@@ -1,5 +1,4 @@
 import React from 'react'
-import { LogoLUKSO } from '../LogoLUKSO'
 import { LogoPOA } from '../LogoPOA'
 import { LogoSokol } from '../LogoSokol'
 import { LogoKovan } from '../LogoKovan'
@@ -8,8 +7,6 @@ import { constants } from '../../utils/constants'
 
 export const Logo = ({ href = null, extraClass = '', networkBranch = '' }) => {
   switch (networkBranch) {
-    case constants.L14:
-      return <LogoLUKSO href={href} extraClass={extraClass} />
     case constants.SOKOL:
       return <LogoSokol href={href} extraClass={extraClass} />
     case constants.KOVAN:
@@ -17,6 +14,6 @@ export const Logo = ({ href = null, extraClass = '', networkBranch = '' }) => {
     //case constants.DAI:
     //  return <LogoDai href={href} extraClass={extraClass} />
     default:
-      return <LogoLUKSO href={href} extraClass={extraClass} />
+      return <LogoPOA href={href} extraClass={extraClass} />
   }
 }

@@ -3,7 +3,7 @@ import helpers from './helpers'
 import { constants } from './constants'
 import messages from './messages'
 
-const defaultNetId = helpers.netIdByBranch(constants.L14)
+const defaultNetId = helpers.netIdByBranch(constants.CORE)
 
 export async function enableWallet(updateKeys) {
   if (window.ethereum) {
@@ -39,7 +39,6 @@ export default async function getWeb3(netId, updateKeys) {
     if (web3) {
       // MetaMask (or another plugin) is injected
       netId = await web3.eth.net.getId()
-      console.log(netId)
       if (!(netId in constants.NETWORKS)) {
         // If plugin's netId is unsupported, try to use
         // the previously chosen netId

@@ -1,6 +1,6 @@
 let constants = {}
-constants.organization = 'lukso-network'
-constants.repoName = 'lukso-chain-spec'
+constants.organization = 'poanetwork'
+constants.repoName = 'poa-chain-spec'
 constants.addressesSourceFile = 'contracts.json'
 constants.ABIsSources = {
   KeysManager: 'KeysManager.abi.json',
@@ -15,11 +15,18 @@ constants.ABIsSources = {
   VotingToManageEmissionFunds: 'VotingToManageEmissionFunds.abi.json'
 }
 
-constants.userDeniedTransactionPattern = 'User denied transaction'
-constants.rootPath = '/' //poa-dapps-voting
-constants.branches = {
-  L14: 'l14'
+constants.NEW_MINING_KEY = {
+  label: 'New Mining Key',
+  lastNameAndKey: '',
+  fullName: '',
+  value: '0x0000000000000000000000000000000000000000'
 }
+
+constants.minBallotDurationInDays = 2
+constants.startTimeOffsetInMinutes = 5
+constants.endTimeDefaultInMinutes = 2890
+constants.getTransactionReceiptInterval = 5000
+constants.rootPath = '/poa-dapps-voting'
 
 constants.navigationData = [
   {
@@ -44,14 +51,30 @@ constants.navigationData = [
   }
 ]
 
-constants.L14 = 'l14'
+constants.SOKOL = 'sokol'
+constants.CORE = 'core'
+constants.KOVAN = 'kovan'
 
 constants.NETWORKS = {
-  '22': {
-    NAME: 'L14',
-    FULLNAME: 'LUKSO L14',
-    RPC: 'http://localhost:8545',
-    BRANCH: constants.branches.L14,
+  '42': {
+    NAME: 'Kovan',
+    FULLNAME: 'Kovan Testnet',
+    RPC: 'https://kovan.infura.io/v3/1125fe73d87c4e5396678f4e3089b3dd',
+    BRANCH: constants.KOVAN,
+    SORTORDER: 3
+  },
+  '77': {
+    NAME: 'Sokol',
+    FULLNAME: 'Sokol Testnet',
+    RPC: 'https://sokol.poa.network',
+    BRANCH: constants.SOKOL,
+    SORTORDER: 4
+  },
+  '99': {
+    NAME: 'Core',
+    FULLNAME: 'POA Core',
+    RPC: 'https://core.poa.network',
+    BRANCH: constants.CORE,
     SORTORDER: 1
   }
 }

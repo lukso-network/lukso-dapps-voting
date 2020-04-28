@@ -35,27 +35,22 @@ export const SocialIcons = ({ extraClass = '', networkBranch = '' }) => {
       <IconTwitter
         backgroundColor={backgroundColor}
         color={iconColor}
-        text="LUKSO Twitter"
-        url="https://twitter.com/lukso_io"
+        text="POA Twitter"
+        url="https://twitter.com/poanetwork"
       />
       <IconTelegram
         backgroundColor={backgroundColor}
         color={iconColor}
-        text="LUKSO Telegram"
-        url="https://t.me/LUKSO"
+        text="POA Telegram"
+        url="https://t.me/oraclesnetwork"
       />
       <IconGithub
         backgroundColor={backgroundColor}
         color={iconColor}
-        text="LUKSO Github"
-        url="https://github.com/lukso-network"
+        text="POA Github"
+        url="https://github.com/poanetwork"
       />
-      <IconPOA
-        text="LUKSO Network"
-        url="https://www.lukso.network"
-        backgroundColor={backgroundColor}
-        color={iconColor}
-      />
+      <IconPOA text="POA Network" url="https://poa.net" backgroundColor={backgroundColor} color={iconColor} />
     </div>
   )
 }

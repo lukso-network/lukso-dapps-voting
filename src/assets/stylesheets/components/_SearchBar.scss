@@ -1,5 +1,5 @@
 .sw-SearchBar {
-    background-color: $lukso-pink-darker;
+    background-color: $poa-purple-darker;
     box-sizing: border-box;
     display: flex;
     flex-shrink: 0;
@@ -12,9 +12,6 @@
     top: 70px;
     z-index: 123;
 
-    &#{ & }-l14 {
-        background-color: $lukso-pink-darker;
-    }
     &#{ & }-core {
         background-color: $poa-purple-darker;
     }

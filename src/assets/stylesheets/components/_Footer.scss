@@ -1,6 +1,6 @@
 .sw-Footer {
     align-items: center;
-    background-color: $lukso-pink-darker;
+    background-color: $poa-purple;
     color: #fff;
     display: flex;
     flex-shrink: 0;
@@ -10,10 +10,6 @@
     padding: 16px 0;
     transition: background-color 0.25s ease-out;
     width: 100%;
-
-    &#{ & }-l14 {
-        background-color: $lukso-pink-darker;
-    }
 
     &#{ & }-core {
         background-color: $poa-purple;

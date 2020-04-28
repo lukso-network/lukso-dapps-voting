@@ -1,6 +1,6 @@
 .sw-Header {
     align-items: center;
-    background-color: $lukso-pink;
+    background-color: $poa-purple;
     color: #fff;
     display: flex;
     flex-shrink: 0;
@@ -19,12 +19,8 @@
         height: auto;
     }
 
-    &#{ & }-l14 {
-        background-color: $lukso-pink;
-    }
-
     &#{ & }-core {
-        background-color: $lukso-pink;
+        background-color: $poa-purple;
     }
 
     &#{ & }-sokol {
