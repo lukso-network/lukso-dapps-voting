@@ -1,12 +1,19 @@
 # POA Network Governance Dapp
 
+## Base supported networks
+
+- Core POA network (RPC endpoint: `https://core.poa.network`)
+- xDai chain (RPC endpoint: `https://dai.poa.network`)
+- Sokol testnet (RPC endpoint: `https://sokol.poa.network`)
+- Kovan testnet (RPC endpoint: `https://kovan.infura.io/`)
+
 ## Supported browsers
 
 * Google Chrome v 59.0.3071.115+
 
-## MetaMask plugin setup
+## MetaMask/Nifty Wallet extensions setup
 
-* [Connect to POA Network in MetaMask plugin](https://github.com/poanetwork/wiki/wiki/POA-Network-on-MetaMask) and import your voting key.
+* Connect to POA Network in MetaMask extension (See [POA Network on MetaMask](https://github.com/poanetwork/wiki/wiki/POA-Network-on-MetaMask)) or in Nifty Wallet extension (See [POA Network on Nifty Wallet](https://github.com/poanetwork/wiki/wiki/POA-Network-on-Nifty-Wallet)) and import your voting key.
 
 
 ## Governance Dapp overview
@@ -17,7 +24,7 @@ Please check related posts in wiki [Governance Overview](https://github.com/poan
 ## Configuration
 Governance DApp is configured with [POA Network governance contracts](https://github.com/poanetwork/poa-network-consensus-contracts)
 
-There are contracts' addresses for [sokol](https://github.com/poanetwork/poa-chain-spec/blob/sokol/contracts.json) and [core](https://github.com/poanetwork/poa-chain-spec/blob/core/contracts.json).
+There are contracts' addresses for [Sokol](https://github.com/poanetwork/poa-chain-spec/blob/sokol/contracts.json), [Core](https://github.com/poanetwork/poa-chain-spec/blob/core/contracts.json), [xDai](https://github.com/poanetwork/poa-chain-spec/blob/dai/contracts.json), and [Kovan](https://github.com/poanetwork/poa-chain-spec/blob/kovan/contracts.json).
 
 
 ## Building from source

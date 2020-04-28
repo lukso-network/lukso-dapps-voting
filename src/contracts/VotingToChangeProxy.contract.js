@@ -1,6 +1,6 @@
 import { networkAddresses } from './addresses'
 import helpers from './helpers'
-import { constants } from '../constants'
+import { constants } from '../utils/constants'
 
 export default class VotingToChangeProxy {
   async init({ web3, netId }) {
@@ -50,6 +50,10 @@ export default class VotingToChangeProxy {
     return this.instance.methods.votingState(_id).call()
   }
 
+  getMinThresholdOfVoters(_id) {
+    return this.instance.methods.getMinThresholdOfVoters(_id).call()
+  }
+
   hasAlreadyVoted(_id, votingKey) {
     return this.instance.methods.hasAlreadyVoted(_id, votingKey).call()
   }
@@ -72,5 +76,9 @@ export default class VotingToChangeProxy {
   async getBallotLimit(_miningKey, _limitPerValidator) {
     const _activeBallots = await this.instance.methods.validatorActiveBallots(_miningKey).call()
     return _limitPerValidator - _activeBallots
+  }
+
+  minBallotDuration() {
+    return this.instance.methods.minBallotDuration().call()
   }
 }

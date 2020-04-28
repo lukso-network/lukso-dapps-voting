@@ -1,6 +1,6 @@
 import { networkAddresses } from './addresses'
 import helpers from './helpers'
-import { constants } from '../constants'
+import { constants } from '../utils/constants'
 
 export default class VotingToManageEmissionFunds {
   async init({ web3, netId }) {
@@ -67,6 +67,10 @@ export default class VotingToManageEmissionFunds {
 
   getBallotInfo(_id, _votingKey) {
     return this.instance.methods.getBallotInfo(_id).call()
+  }
+
+  getMinThresholdOfVoters(_id) {
+    return this.instance.methods.getMinThresholdOfVoters(_id).call()
   }
 
   getQuorumState(_id) {
