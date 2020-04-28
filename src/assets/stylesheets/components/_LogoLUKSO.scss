@@ -1,0 +1,20 @@
+.sw-LogoLUKSO {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    .sw-Header & {
+        width: 108px;
+    }
+
+    .sw-Footer & {
+        width: 105px;
+    }
+
+}
+
+.sw-LogoLUKSO_Image {
+    display: block;
+    height: 100%;
+    width: 100%;
+}

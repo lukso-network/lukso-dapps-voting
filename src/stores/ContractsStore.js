@@ -14,11 +14,11 @@ import ValidatorMetadata from '../contracts/ValidatorMetadata.contract'
 import ballotStore from './BallotStore'
 import ballotsStore from './BallotsStore'
 import commonStore from './CommonStore'
-import { BallotKeysCard } from '../components/BallotKeysCard.jsx'
-import { BallotMinThresholdCard } from '../components/BallotMinThresholdCard.jsx'
-import { BallotProxyCard } from '../components/BallotProxyCard.jsx'
-import { BallotEmissionFundsCard } from '../components/BallotEmissionFundsCard.jsx'
-import { constants } from '../constants'
+import { BallotKeysCard } from '../components/BallotKeysCard'
+import { BallotMinThresholdCard } from '../components/BallotMinThresholdCard'
+import { BallotProxyCard } from '../components/BallotProxyCard'
+import { BallotEmissionFundsCard } from '../components/BallotEmissionFundsCard'
+import { constants } from '../utils/constants'
 
 import 'babel-polyfill'
 
@@ -43,45 +43,52 @@ class ContractsStore {
   @observable emissionFundsBallotThreshold
   @observable ballotCancelingThreshold
   @observable validatorLimits
+  @observable minBallotDuration
   @observable validatorsMetadata
   @observable netId
+  @observable injectedWeb3
 
   constructor() {
-    this.votingKey = null
-    this.miningKey = null
+    this.votingKey = '0x0000000000000000000000000000000000000000'
+    this.miningKey = '0x0000000000000000000000000000000000000000'
     this.validatorsMetadata = {}
     this.validatorLimits = { keys: null, minThreshold: null, proxy: null }
+    this.minBallotDuration = { keys: 0, minThreshold: 0, proxy: 0 }
+    this.injectedWeb3 = false
+  }
+
+  @computed
+  get isEmptyVotingKey() {
+    return !this.votingKey || this.votingKey === '0x0000000000000000000000000000000000000000'
   }
 
   @computed
   get isValidVotingKey() {
+    if (this.isEmptyVotingKey) return false
     if (this.miningKey && this.miningKey !== '0x0000000000000000000000000000000000000000') return true
     return false
-  }
-
-  @action('Get keys ballot threshold')
-  getKeysBallotThreshold = async () => {
-    this.keysBallotThreshold = await this.ballotsStorage.instance.methods.getBallotThreshold(1).call()
-    this.minThresholdBallotThreshold = this.keysBallotThreshold
-  }
-
-  @action('Get proxy ballot threshold')
-  getProxyBallotThreshold = async () => {
-    this.proxyBallotThreshold = await this.ballotsStorage.instance.methods.getProxyThreshold().call()
-    this.emissionFundsBallotThreshold = this.proxyBallotThreshold
-  }
-
-  @action('Get ballot canceling threshold')
-  getBallotCancelingThreshold = async () => {
-    this.ballotCancelingThreshold = this.votingToManageEmissionFunds
-      ? Number(await this.votingToManageEmissionFunds.ballotCancelingThreshold())
-      : 0
   }
 
   @action('Set web3Instance')
   setWeb3Instance = web3Config => {
     this.web3Instance = web3Config.web3Instance
     this.netId = web3Config.netId
+    this.injectedWeb3 = web3Config.injectedWeb3
+    this.networkMatch = web3Config.networkMatch
+  }
+
+  @action('Reset contracts')
+  resetContracts = () => {
+    this.poaConsensus = null
+    this.ballotsStorage = null
+    this.emissionFunds = null
+    this.keysManager = null
+    this.proxyStorage = null
+    this.votingToChangeKeys = null
+    this.votingToChangeMinThreshold = null
+    this.votingToChangeProxy = null
+    this.votingToManageEmissionFunds = null
+    this.validatorMetadata = null
   }
 
   @action('Set PoA Consensus contract')
@@ -180,18 +187,38 @@ class ContractsStore {
   }
 
   @action('Set voting key')
-  setVotingKey = web3Config => {
-    this.votingKey = web3Config.defaultAccount
+  setVotingKey = account => {
+    this.votingKey = account
   }
 
   @action('Set mining key')
-  setMiningKey = async web3Config => {
-    try {
-      this.miningKey = await this.keysManager.instance.methods.miningKeyByVoting(web3Config.defaultAccount).call()
-    } catch (e) {
-      console.log(e)
-      this.miningKey = '0x0000000000000000000000000000000000000000'
+  setMiningKey = async account => {
+    let miningKey = '0x0000000000000000000000000000000000000000'
+    if (account && account !== '0x0000000000000000000000000000000000000000') {
+      try {
+        miningKey = await this.keysManager.instance.methods.miningKeyByVoting(account).call()
+      } catch (e) {
+        console.log(e)
+      }
     }
+    this.miningKey = miningKey
+  }
+
+  @action('Update keys')
+  updateKeys = async account => {
+    account = account || '0x0000000000000000000000000000000000000000'
+
+    if (this.votingKey && this.votingKey.toLowerCase() === account.toLowerCase()) {
+      return
+    }
+
+    this.setVotingKey(account)
+    await this.setMiningKey(account)
+
+    console.log('votingKey', this.votingKey)
+    console.log('miningKey', this.miningKey)
+
+    await this.getBallotsLimits()
   }
 
   @action('Get all keys ballots')
@@ -215,12 +242,26 @@ class ContractsStore {
       console.log(e.message)
     }
 
-    const allKeysPromise = this.getCards(keysNextBallotId, 'votingToChangeKeys')
-    const allMinThresholdPromise = this.getCards(minThresholdNextBallotId, 'votingToChangeMinThreshold')
-    const allProxyPromise = this.getCards(proxyNextBallotId, 'votingToChangeProxy')
-    const allEmissionFundsPromise = this.getCards(emissionFundsNextBallotId, 'votingToManageEmissionFunds')
+    const [keysBallots, minThresholdBallots, proxyBallots, emissionFundsBallots] = await Promise.all([
+      this.getBallots(keysNextBallotId, 'votingToChangeKeys'),
+      this.getBallots(minThresholdNextBallotId, 'votingToChangeMinThreshold'),
+      this.getBallots(proxyNextBallotId, 'votingToChangeProxy'),
+      this.getBallots(emissionFundsNextBallotId, 'votingToManageEmissionFunds')
+    ])
 
-    await Promise.all([allKeysPromise, allMinThresholdPromise, allProxyPromise, allEmissionFundsPromise])
+    const ballots = [...keysBallots, ...minThresholdBallots, ...proxyBallots, ...emissionFundsBallots]
+    ballotsStore.ballotCards = this.mapBallotsToCards(ballots)
+
+    const finalizedOrCancelled = item => item.isFinalized || item.isCanceled
+    window.localStorage.setItem(
+      `ballots-${this.netId}`,
+      JSON.stringify({
+        votingToChangeKeys: keysBallots.filter(finalizedOrCancelled),
+        votingToChangeMinThreshold: minThresholdBallots.filter(finalizedOrCancelled),
+        votingToChangeProxy: proxyBallots.filter(finalizedOrCancelled),
+        votingToManageEmissionFunds: emissionFundsBallots.filter(finalizedOrCancelled)
+      })
+    )
 
     const allBallotsIDsLength =
       keysNextBallotId + minThresholdNextBallotId + proxyNextBallotId + emissionFundsNextBallotId
@@ -307,72 +348,59 @@ class ContractsStore {
     return votingState
   }
 
-  getCard = async (id, contractType) => {
+  mapBallotsToCards = ballots => {
+    return ballots.map((ballot, pos) => {
+      let component
+      let params = {
+        id: ballot.id,
+        key: ballot.type + ballot.id,
+        pos,
+        votingState: ballot
+      }
+      switch (ballot.type) {
+        case 'votingToChangeKeys':
+          component = <BallotKeysCard {...params} type={ballotStore.BallotType.keys} />
+          break
+        case 'votingToChangeMinThreshold':
+          component = <BallotMinThresholdCard {...params} type={ballotStore.BallotType.minThreshold} />
+          break
+        case 'votingToChangeProxy':
+          component = <BallotProxyCard {...params} type={ballotStore.BallotType.proxy} />
+          break
+        case 'votingToManageEmissionFunds':
+          component = <BallotEmissionFundsCard {...params} type={ballotStore.BallotType.emissionFunds} />
+          break
+        default:
+          break
+      }
+      return component
+    })
+  }
+
+  getBallot = async (id, contractType) => {
     let votingState
     try {
       votingState = await this[contractType].getBallotInfo(id, this.votingKey)
       votingState = this.fillCardVotingState(votingState, contractType)
+      votingState.type = contractType
+      votingState.id = id
     } catch (e) {
       console.log(e.message)
     }
-
-    let card
-    switch (contractType) {
-      case 'votingToChangeKeys':
-        card = (
-          <BallotKeysCard
-            id={id}
-            type={ballotStore.BallotType.keys}
-            key={ballotsStore.ballotCards.length}
-            pos={ballotsStore.ballotCards.length}
-            votingState={votingState}
-          />
-        )
-        break
-      case 'votingToChangeMinThreshold':
-        card = (
-          <BallotMinThresholdCard
-            id={id}
-            type={ballotStore.BallotType.minThreshold}
-            key={ballotsStore.ballotCards.length}
-            pos={ballotsStore.ballotCards.length}
-            votingState={votingState}
-          />
-        )
-        break
-      case 'votingToChangeProxy':
-        card = (
-          <BallotProxyCard
-            id={id}
-            type={ballotStore.BallotType.proxy}
-            key={ballotsStore.ballotCards.length}
-            pos={ballotsStore.ballotCards.length}
-            votingState={votingState}
-          />
-        )
-        break
-      case 'votingToManageEmissionFunds':
-        card = (
-          <BallotEmissionFundsCard
-            id={id}
-            type={ballotStore.BallotType.emissionFunds}
-            key={ballotsStore.ballotCards.length}
-            pos={ballotsStore.ballotCards.length}
-            votingState={votingState}
-          />
-        )
-        break
-      default:
-        break
-    }
-
-    return card
+    return votingState
   }
 
-  getCards = async (nextBallotId, contractType) => {
-    for (let id = nextBallotId - 1; id >= 0; id--) {
-      ballotsStore.ballotCards.push(await this.getCard(id, contractType))
-    }
+  getBallots = async (nextBallotId, contractType) => {
+    const ballotsObject = JSON.parse(window.localStorage.getItem(`ballots-${this.netId}`) || '{}')
+    const existingBallots = ballotsObject[contractType] || []
+    const existingBallotsIds = existingBallots.map(item => item.id)
+    const allBallotsIds = Array(nextBallotId)
+      .fill(undefined)
+      .map((item, index) => index)
+    const newBallotsIds = allBallotsIds.filter(item => !existingBallotsIds.includes(item))
+    const promises = newBallotsIds.map(id => this.getBallot(id, contractType))
+    const newBallots = await Promise.all(promises)
+    return existingBallots.concat(newBallots)
   }
 
   @action('Get all keys next ballot ids')
@@ -388,21 +416,72 @@ class ContractsStore {
 
   @action
   async getBallotsLimits() {
-    if (this.web3Instance && this.netId) {
-      const limitPerValidator = await this.ballotsStorage.instance.methods.getBallotLimitPerValidator().call()
+    return new Promise(async resolve => {
+      if (this.web3Instance && this.netId) {
+        let keysLimit = 0
+        let minThresholdLimit = 0
+        let proxyLimit = 0
 
-      let getKeysLimit = await this.votingToChangeKeys.getBallotLimit(this.miningKey, limitPerValidator)
-      let getMinThresholdLimit = await this.votingToChangeMinThreshold.getBallotLimit(this.miningKey, limitPerValidator)
-      let getProxyLimit = await this.votingToChangeProxy.getBallotLimit(this.miningKey, limitPerValidator)
-
-      await Promise.all([getKeysLimit, getMinThresholdLimit, getProxyLimit]).then(
-        ([keysLimit, minThresholdLimit, proxyLimit]) => {
-          this.validatorLimits.keys = keysLimit
-          this.validatorLimits.minThreshold = minThresholdLimit
-          this.validatorLimits.proxy = proxyLimit
+        if (this.isValidVotingKey) {
+          const limitPerValidator = await this.ballotsStorage.instance.methods.getBallotLimitPerValidator().call()
+          keysLimit = await this.votingToChangeKeys.getBallotLimit(this.miningKey, limitPerValidator)
+          minThresholdLimit = await this.votingToChangeMinThreshold.getBallotLimit(this.miningKey, limitPerValidator)
+          proxyLimit = await this.votingToChangeProxy.getBallotLimit(this.miningKey, limitPerValidator)
         }
-      )
-    }
+
+        this.validatorLimits.keys = keysLimit
+        this.validatorLimits.minThreshold = minThresholdLimit
+        this.validatorLimits.proxy = proxyLimit
+      }
+      resolve()
+    })
+  }
+
+  @action
+  async getMinBallotDurationsAndThresholds() {
+    return new Promise(async resolve => {
+      if (this.web3Instance && this.netId) {
+        const getKeysMinBallotDuration = this.votingToChangeKeys.minBallotDuration()
+        const getMinThresholdMinBallotDuration = this.votingToChangeMinThreshold.minBallotDuration()
+        const getProxyMinBallotDuration = this.votingToChangeProxy.minBallotDuration()
+
+        const getBallotThreshold = this.ballotsStorage.instance.methods.getBallotThreshold(1).call()
+        const getProxyThreshold = this.ballotsStorage.instance.methods.getProxyThreshold().call()
+        const getBallotCancelingThreshold = this.votingToManageEmissionFunds
+          ? this.votingToManageEmissionFunds.ballotCancelingThreshold()
+          : 0
+
+        await Promise.all([
+          getKeysMinBallotDuration,
+          getMinThresholdMinBallotDuration,
+          getProxyMinBallotDuration,
+          getBallotThreshold,
+          getProxyThreshold,
+          getBallotCancelingThreshold
+        ]).then(
+          ([
+            keysMinBallotDuration,
+            minThresholdMinBallotDuration,
+            proxyMinBallotDuration,
+            keysBallotThreshold,
+            proxyBallotThreshold,
+            cancelingThreshold
+          ]) => {
+            this.minBallotDuration.keys = keysMinBallotDuration
+            this.minBallotDuration.minThreshold = minThresholdMinBallotDuration
+            this.minBallotDuration.proxy = proxyMinBallotDuration
+            this.keysBallotThreshold = keysBallotThreshold
+            this.minThresholdBallotThreshold = keysBallotThreshold
+            this.proxyBallotThreshold = proxyBallotThreshold
+            this.emissionFundsBallotThreshold = proxyBallotThreshold
+            this.ballotCancelingThreshold = cancelingThreshold
+            resolve()
+          }
+        )
+      } else {
+        resolve()
+      }
+    })
   }
 
   @action
@@ -413,9 +492,9 @@ class ContractsStore {
     keys.forEach(async key => {
       const metadata = await this.validatorMetadata.getValidatorFullName(key)
       this.validatorsMetadata[key.toLowerCase()] = {
-        label: `${key} ${metadata.lastName}`,
-        lastNameAndKey: `${metadata.lastName} ${key}`,
-        fullName: `${metadata.firstName} ${metadata.lastName}`,
+        label: `${key} ${metadata.lastName}`.trim(),
+        lastNameAndKey: `${metadata.lastName} ${key}`.trim(),
+        fullName: `${metadata.firstName} ${metadata.lastName}`.trim(),
         value: key
       }
     })
