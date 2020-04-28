@@ -3,7 +3,7 @@ import helpers from './helpers'
 import { constants } from './constants'
 import messages from './messages'
 
-const defaultNetId = helpers.netIdByBranch(constants.CORE)
+const defaultNetId = helpers.netIdByBranch(constants.L14)
 
 export async function enableWallet(updateKeys) {
   if (window.ethereum) {

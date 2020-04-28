@@ -80,8 +80,8 @@ class AppMainRouter extends Component {
     ]
 
     const networkName = constants.NETWORKS[web3Config.netId].NAME.toLowerCase()
-    if (networkName === constants.CORE || networkName === constants.SOKOL) {
-      // if we're in Core or Sokol
+    if (networkName === constants.L14) {
+      // if we're in L14
       promises.push(contractsStore.setEmissionFunds(web3Config))
       promises.push(contractsStore.setVotingToManageEmissionFunds(web3Config))
     }

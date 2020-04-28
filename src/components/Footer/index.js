@@ -8,7 +8,7 @@ export const Footer = ({ baseRootPath = '', extraClassName = '', networkBranch =
     <footer className={`sw-Footer ${extraClassName}  sw-Footer-${networkBranch}`}>
       <div className="sw-Footer_Content">
         <Logo networkBranch={networkBranch} href={baseRootPath} />
-        <p className="sw-Footer_Text">{moment().format('YYYY')} POA Network. All rights reserved.</p>
+        <p className="sw-Footer_Text">{moment().format('YYYY')} Interface built by POA Network. All rights reserved.</p>
         <SocialIcons networkBranch={networkBranch} />
       </div>
     </footer>

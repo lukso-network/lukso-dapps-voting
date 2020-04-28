@@ -11,6 +11,9 @@
     transition: background-color 0.25s ease-out;
     width: 100%;
 
+    &#{ & }-l14 {
+        background-color: $lukso-pink-darker;
+    }
     &#{ & }-core {
         background-color: $poa-purple;
     }
