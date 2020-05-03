@@ -43,6 +43,17 @@
         border-color: darken($base-border-color, 15%);
     }
 
+
+    .frm-KeysTypes_Radio:checked + &#{ & }-l14 {
+        &,
+        &:hover {
+            background-color: $lukso-pink-darker;
+            border-color: $lukso-pink-darker;
+            box-shadow: 0 5px 10px 0 rgba($lukso-pink-darker, 0.3);
+            color: #fff;
+        }
+    }
+
     .frm-KeysTypes_Radio:checked + &#{ & }-core {
         &,
         &:hover {

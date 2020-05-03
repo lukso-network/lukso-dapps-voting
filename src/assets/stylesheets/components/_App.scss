@@ -36,6 +36,11 @@
         }
     }
 
+    &#{ & }-l14 {
+        &:before {
+            background-color: $lukso-pink-darker;
+        }
+    }
     &#{ & }-core {
         &:before {
             background-color: rgba($poa-purple, 0.5);

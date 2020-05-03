@@ -17,6 +17,25 @@ $sw-ButtonNewBallot-height: 36px;
     text-decoration: none;
     transition: 0.15s background-color;
 
+    &#{ & }-l14 {
+        background-color: $poa-green-color;
+        box-shadow: 0 5px 10px 0 rgba($lukso-navy-blue, 0.3);
+        color: #fff;
+
+        &:active,
+        &:hover {
+            background-color: darken($poa-green-color, 10%);
+        }
+
+        &.active {
+            &,
+            &:active,
+            &:hover {
+                background-color: $poa-green-color;
+            }
+        }
+    }
+
     &#{ & }-core {
         background-color: $poa-green-color;
         box-shadow: 0 5px 10px 0 rgba($poa-purple, 0.3);

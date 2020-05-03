@@ -18,6 +18,15 @@ $sw-ButtonAddBallot-height: 44px;
     text-decoration: none;
     transition: 0.15s background-color;
 
+
+    &#{ & }-l14 {
+        background-color: $lukso-pink-darker;
+        color: #fff;
+
+        &:hover {
+            background-color: darken($lukso-pink-darker, 10%);
+        }
+    }
     &#{ & }-core {
         background-color: $poa-purple;
         color: #fff;

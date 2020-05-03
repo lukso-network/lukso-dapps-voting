@@ -3,6 +3,9 @@
     padding: 10px;
     width: 100%;
 
+    &#{ & }-l14 {
+        background-color: $lukso-pink-darker;
+    }
     &#{ & }-core {
         background-color: $poa-purple-darker;
     }

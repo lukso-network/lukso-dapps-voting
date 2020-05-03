@@ -1,4 +1,7 @@
 @mixin menu-icon-colors() {
+    &#{ & }-l14 {
+        fill: $lukso-navy-blue;
+    }
     &#{ & }-core {
         fill: $poa-menu-icon-color;
     }

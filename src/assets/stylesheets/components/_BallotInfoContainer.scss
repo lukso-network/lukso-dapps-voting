@@ -54,6 +54,9 @@
     display: inline-block;
     margin-left: 5px;
 
+    &#{ & }-l14 {
+        color: $lukso-pink-darker;
+    }
     &#{ & }-core {
         color: $poa-purple;
     }

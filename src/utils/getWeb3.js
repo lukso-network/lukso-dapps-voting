@@ -3,6 +3,8 @@ import helpers from './helpers'
 import { constants } from './constants'
 import messages from './messages'
 
+global.Web3 = Web3
+
 const defaultNetId = helpers.netIdByBranch(constants.L14)
 
 export async function enableWallet(updateKeys) {

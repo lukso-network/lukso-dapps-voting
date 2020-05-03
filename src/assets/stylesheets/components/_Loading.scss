@@ -11,6 +11,9 @@
     top: 0;
     z-index: 1000000;
 
+    &#{ & }-l14 {
+        background-color: rgba($lukso-pink-darker, 0.5);
+    }
     &#{ & }-core {
         background-color: rgba($poa-purple, 0.5);
     }

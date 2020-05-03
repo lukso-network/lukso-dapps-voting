@@ -16,6 +16,11 @@
     text-decoration: none;
     width: 100%;
 
+
+    &#{ & }-l14 {
+        border-color: $lukso-pink-darker;
+
+    }
     &#{ & }-core {
         border-color: $poa-purple;
     }

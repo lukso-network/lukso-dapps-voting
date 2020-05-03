@@ -16,6 +16,15 @@
     text-transform: capitalize;
     transition: 0.15s background-color;
 
+
+    &#{ & }-l14 {
+        background-color: $lukso-pink-darker;
+
+        &:active,
+        &:hover {
+            background-color: darken($lukso-pink-darker, 10%);
+        }
+    }
     &#{ & }-core {
         background-color: $poa-purple;
 

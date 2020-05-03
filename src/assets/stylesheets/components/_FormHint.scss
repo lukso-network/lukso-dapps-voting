@@ -8,6 +8,11 @@
     word-break: break-all;  // hack for FF, leave it as it is
     word-break: break-word;
 
+    &#{ & }-l14 {
+        a {
+            color: $lukso-pink-darker;
+        }
+    }
     &#{ & }-core {
         a {
             color: $poa-purple;

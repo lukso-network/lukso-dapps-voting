@@ -1,5 +1,8 @@
 @mixin path-colors($parent-class: '', $fill-core: #fff, $fill-sokol: #fff, $fill-dai: #fff, $fill-kovan: #fff) {
 
+    #{ $parent-class } &#{ & }-l14 {
+        fill: $lukso-pink-darker;
+    }
     #{ $parent-class } &#{ & }-core {
         fill: $fill-core;
     }
